@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrap {
+            width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            h1 {
+                font-size: 48px;
+                font-weight: 600;
+                color: black;
+            }
+
+            button {
+                font-size: 18px;
+                font-weight: 600;
+                width: 254px;
+                height: 55px;
+                border-radius: 10px;
+                background-color: white;
+                color: black;
+                border: 1px solid rgb(0, 0, 0);
+                cursor: pointer;
+            }
+        }
+
+        .box {
+            margin-bottom: 10px;
+            margin-left: 20px;
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        .main {
+            margin-top: 50px;
+            border: 1px solid black;
+            width: 364px;
+            height: 474px;
+            background-color: black;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-inline: 10px;
+        }
+
+        .img {
+            background-color: white;
+            width: 362px;
+            height: 199px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            left: -10px;
+
+            img {
+                width: 115px;
+                height: 161px;
+            }
+        }
+
+        .words {
+            display: flex;
+            flex-direction: row;
+            padding: 10px;
+            gap: 45px;
+            padding-left: 20px;
+        }
+
+        .item {
+            display: flex;
+            gap: 5px;
+            align-items: center;
+        }
+
+        h1 {
+            font-size: 30px;
+            color: white;
+            padding: 10px;
+            font-weight: 600;
+            padding-left: 20px;
+        }
+
+        h2 {
+            font-size: 30px;
+            color: white;
+            font-weight: 600;
+            padding: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            font-weight: 500;
+            color: gray;
+            padding-inline: 20px;
+        }
+
+        .span {
+            width: 12px;
+            height: 20px;
+            background-image: url(./img/Group\ 7.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .span_2 {
+            width: 15px;
+            height: 15px;
+            background-image: url(./img/Group\ 9.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .span_3 {
+            width: 15px;
+            height: 15px;
+            background-image: url(./img/Group\ 10.svg);
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        button {
+            width: 305px;
+            height: 55px;
+            color: black;
+            background-color: white;
+            border-radius: 10px;
+            border: none;
+            margin-left: 20px;
+            margin-bottom: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .active {
+            background-color: #1F86FF !important;
+            color: white !important;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrap">
+        <h1>В корзине:
+            <span>0</span>
+            товар
+        </h1>
+        <div class="btns">
+            <button>Показать первые 5</button>
+            <button>Показать все</button>
+        </div>
+    </div>
+    <script src="./index.js"></script>
+</body>
+
+</html>
