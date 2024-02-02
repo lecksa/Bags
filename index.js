@@ -294,20 +294,16 @@ function bags(arr, place) {
     }
 }
 
-function five() {
-    let filtered = products.filter(item => {
-        if (btn.innerHTML === "Добавлено") {
-            return item
-        }
-    }).slice(0, 5)
-    
+function five(items) {
+    let filtered = items.slice(0, 5)
+
     bags(filtered, box)
 }
 
 just.onclick = () => {
-    five()
+    five(products)
 }
 
-// all.onclick = () => {
-//     bags(products, box)
-// }
+all.onclick = () => {
+    bags(products, box)
+}
