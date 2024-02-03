@@ -1,11 +1,12 @@
+import { products } from "./arr.js"
+let tovari = document.querySelector('.products')
+let cart_ids = []
 
-
-
-export function bags(tab, arr, place) {
+export function bags(arr, place) {
     place.innerHTML = ''
 
     let num = document.querySelector('.wrap span')
-    let dig = 0
+    let dig = +num.innerText
 
     for (let product of arr) {
         //a
@@ -45,7 +46,6 @@ export function bags(tab, arr, place) {
         btn.innerHTML = 'В избранное'
 
         //c
-        tab.append(place)
         place.append(main)
         main.append(img, h1, p, words, btn)
         img.append(bag)
@@ -53,22 +53,98 @@ export function bags(tab, arr, place) {
         item.append(span_1, h2, span_2, h2_2, span_3, h2_3)
 
         btn.onclick = () => {
-            if (btn.innerHTML === 'В избранное') {
-                btn.classList.add('active')
-                btn.innerHTML = 'Добавлено'
-                dig++
-            } else {
+            if (cart_ids.includes(product.id)) {
                 btn.classList.remove('active')
                 btn.innerHTML = 'В избранное'
                 dig--
+                cart_ids.splice(cart_ids.indexOf(product.id), 1)
+            } else {
+                btn.classList.add('active')
+                btn.innerHTML = 'Добавлено'
+                dig++
+                cart_ids.push(product.id)
+                console.log(product.id);
             }
             num.innerHTML = dig
+
+            cart(cart_ids, tovari)
         }
     }
 }
 
-export function five(tab, arr, place) {
+export function five(arr, place) {
     let filtered = arr.slice(0, 5)
 
-    bags(tab, filtered, place)
+    bags(filtered, place)
+}
+
+function cart(ids, place) {
+    place.innerHTML = ''
+
+    for (let id of ids) {
+        const item = products.find(elem => elem.id === id)
+        console.log(item);
+
+        //a
+        let prdct = document.createElement('div')
+        let img = document.createElement('img')
+        let box = document.createElement('div')
+        let h1 = document.createElement('h1')
+        let h2 = document.createElement('h2')
+        let tvr = document.createElement('div')
+        let incr = document.createElement('div')
+        let btn_min = document.createElement('button')
+        let p = document.createElement('p')
+        let btn_plus = document.createElement('button')
+        let wd = document.createElement('div')
+        let price = document.createElement('p')
+        let span = document.createElement('span')
+
+        //b
+        prdct.classList.add('product')
+        box.classList.add('box')
+        tvr.classList.add('tovar')
+        incr.classList.add('incr')
+        btn_min.classList.add('minus')
+        btn_plus.classList.add('plus')
+        wd.classList.add('wd')
+
+        img.src = item.image
+        h1.innerHTML = item.title
+        h2.innerHTML = item.category
+        btn_min.innerHTML = '-'
+        p.innerHTML = 1
+        btn_plus.innerHTML = '+'
+        price.innerHTML = +item.price
+        span.innerHTML = '$'
+
+        //c
+        place.append(prdct)
+        prdct.append(img, box, tvr)
+        box.append(h1, h2)
+        tvr.append(incr, wd)
+        incr.append(btn_min, p, btn_plus)
+        wd.append(price, span)
+
+        btn_min.onclick = () => {
+
+            if (p.innerHTML === 0) {
+                cart_ids.splice(cart_ids.indexOf(item.id), 1)
+                cart(cart_ids, tovari)
+            }
+
+            if (p.innerHTML > 0) {
+                p.innerHTML--
+                price.innerText = Math.trunc((price.innerText - item.price) * 100) / 100
+            }
+        }
+
+        btn_plus.onclick = () => {
+            p.innerHTML++
+            if (p.innerHTML >= 1) {
+                price.innerText = Math.trunc((item.price * p.innerText) * 100) / 100
+            }
+        }
+
+    }
 }

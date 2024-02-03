@@ -285,26 +285,31 @@
                 }
             }
 
-            .total {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                margin-top: 40px;
-
-                h1,
-                .sum {
-                    font-size: 28px;
-                    color: rgb(82, 82, 82);
-                    font-weight: 600;
-                    margin: 20px;
-                }
-            }
-
+            
             .vso {
                 position: sticky;
                 bottom: 0;
-                background-color: white;
+                top: 490px;
+                background-color: rgb(255, 255, 255);
                 padding: 5px;
+                display: flex;
+                flex-direction: column;
+                border-radius: 5%;
+                
+                .total {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    height: 50px;
+    
+                    h1,
+                    .sum {
+                        font-size: 28px;
+                        color: rgb(82, 82, 82);
+                        font-weight: 600;
+                        margin: 10px;
+                    }
+                }
 
                 button {
                     background-color: rgb(4, 104, 21);
@@ -343,13 +348,13 @@
                 </div>
             </div> -->
         </div>
-        <div class="total">
-            <h1>Total</h1>
-            <div class="sum">0
-                <span>$</span>
-            </div>
-        </div>
         <div class="vso">
+            <div class="total">
+                <h1>Total</h1>
+                <div class="sum">0
+                    <span>$</span>
+                </div>
+            </div>
             <button>Следующий</button>
         </div>
     </div>
@@ -365,7 +370,7 @@
             <button id="open">Корзина</button>
         </div>
     </div>
-    <script type="module" src="./index.js"></script>
+    <script type="module" src="./script.js"></script>
 </body>
 
 </html>
