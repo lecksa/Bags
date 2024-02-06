@@ -5,6 +5,8 @@ let cart_ids = []
 export function bags(arr, place) {
     place.innerHTML = ''
 
+    let total_sum = document.querySelector('.total_sum')
+    let summa = 0
     let num = document.querySelector('.wrap span')
     let dig = +num.innerText
 
@@ -57,17 +59,19 @@ export function bags(arr, place) {
                 btn.classList.remove('active')
                 btn.innerHTML = 'В избранное'
                 dig--
+                summa -= product.price
                 cart_ids.splice(cart_ids.indexOf(product.id), 1)
             } else {
                 btn.classList.add('active')
                 btn.innerHTML = 'Добавлено'
                 dig++
+                summa += product.price
                 cart_ids.push(product.id)
-                console.log(product.id);
             }
+            total_sum.innerHTML = summa
             num.innerHTML = dig
 
-            cart(cart_ids, tovari)
+            cart(cart_ids, tovari, total_sum, summa, dig, btn, num)
         }
     }
 }
@@ -78,12 +82,11 @@ export function five(arr, place) {
     bags(filtered, place)
 }
 
-function cart(ids, place) {
+function cart(ids, place, sum_pokaz, sum, dig, btn, num) {
     place.innerHTML = ''
 
     for (let id of ids) {
         const item = products.find(elem => elem.id === id)
-        console.log(item);
 
         //a
         let prdct = document.createElement('div')
@@ -128,23 +131,28 @@ function cart(ids, place) {
 
         btn_min.onclick = () => {
 
-            if (p.innerHTML === 0) {
-                cart_ids.splice(cart_ids.indexOf(item.id), 1)
+            if (p.innerHTML <= 0) {
+                let indx = cart_ids.indexOf(item.id)
+                cart_ids.splice(indx, 1)
+                btn.classList.remove('active')
+                btn.innerHTML = 'В избранное'
+                dig--
                 cart(cart_ids, tovari)
-            }
-
-            if (p.innerHTML > 0) {
+            } else if (p.innerHTML > 0) {
                 p.innerHTML--
                 price.innerText = Math.trunc((price.innerText - item.price) * 100) / 100
+                sum = Math.trunc((sum - item.price) * 100) / 100
             }
+            num.innerHTML = dig
         }
 
         btn_plus.onclick = () => {
             p.innerHTML++
             if (p.innerHTML >= 1) {
                 price.innerText = Math.trunc((item.price * p.innerText) * 100) / 100
+                sum = Math.trunc((sum + item.price) * 100) / 100
             }
         }
-
+        sum_pokaz.innerHTML = sum
     }
 }
