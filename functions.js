@@ -144,6 +144,7 @@ function cart(ids, place, sum_pokaz, sum, dig, btn, num) {
                 sum = Math.trunc((sum - item.price) * 100) / 100
             }
             num.innerHTML = dig
+            sum_pokaz.innerHTML = sum
         }
 
         btn_plus.onclick = () => {
@@ -152,7 +153,7 @@ function cart(ids, place, sum_pokaz, sum, dig, btn, num) {
                 price.innerText = Math.trunc((item.price * p.innerText) * 100) / 100
                 sum = Math.trunc((sum + item.price) * 100) / 100
             }
+            sum_pokaz.innerHTML = sum
         }
-        sum_pokaz.innerHTML = sum
     }
 }
