@@ -1,14 +1,14 @@
 import { products } from "./arr.js"
+import { box } from "./script.js"
 let tovari = document.querySelector('.products')
 let cart_ids = []
+let total_sum = document.querySelector('.total_sum')
 
 export function bags(arr, place) {
     place.innerHTML = ''
 
-    let total_sum = document.querySelector('.total_sum')
-    let summa = 0
     let num = document.querySelector('.wrap span')
-    let dig = +num.innerText
+    let dig = 0
 
     for (let product of arr) {
         //a
@@ -54,24 +54,27 @@ export function bags(arr, place) {
         words.append(item)
         item.append(span_1, h2, span_2, h2_2, span_3, h2_3)
 
+        if (cart_ids.includes(product.id)) {
+            btn.innerHTML = 'Добавлено'
+            btn.classList.add('active')
+        }
+
         btn.onclick = () => {
             if (cart_ids.includes(product.id)) {
                 btn.classList.remove('active')
                 btn.innerHTML = 'В избранное'
                 dig--
-                summa -= product.price
                 cart_ids.splice(cart_ids.indexOf(product.id), 1)
+                num.innerHTML = dig
             } else {
                 btn.classList.add('active')
                 btn.innerHTML = 'Добавлено'
                 dig++
-                summa += product.price
                 cart_ids.push(product.id)
+                num.innerHTML = dig
             }
-            total_sum.innerHTML = summa
-            num.innerHTML = dig
 
-            cart(cart_ids, tovari, total_sum, summa, dig, btn, num)
+            cart(cart_ids, tovari)
         }
     }
 }
@@ -82,16 +85,21 @@ export function five(arr, place) {
     bags(filtered, place)
 }
 
-function cart(ids, place, sum_pokaz, sum, dig, btn, num) {
+function cart(ids, place) {
     place.innerHTML = ''
+    total_sum.innerHTML = 0
+    let total = 0
 
     for (let id of ids) {
         const item = products.find(elem => elem.id === id)
+        let count_num = 1
+        total += item.price
+        total_sum.innerHTML = total
 
         //a
         let prdct = document.createElement('div')
         let img = document.createElement('img')
-        let box = document.createElement('div')
+        let box_2 = document.createElement('div')
         let h1 = document.createElement('h1')
         let h2 = document.createElement('h2')
         let tvr = document.createElement('div')
@@ -102,58 +110,62 @@ function cart(ids, place, sum_pokaz, sum, dig, btn, num) {
         let wd = document.createElement('div')
         let price = document.createElement('p')
         let span = document.createElement('span')
+        let btn_delete = document.createElement('button')
 
         //b
         prdct.classList.add('product')
-        box.classList.add('box')
+        box_2.classList.add('box')
         tvr.classList.add('tovar')
         incr.classList.add('incr')
         btn_min.classList.add('minus')
         btn_plus.classList.add('plus')
         wd.classList.add('wd')
+        btn_delete.classList.add('btn_delete')
 
         img.src = item.image
         h1.innerHTML = item.title
         h2.innerHTML = item.category
         btn_min.innerHTML = '-'
-        p.innerHTML = 1
+        p.innerHTML = count_num
         btn_plus.innerHTML = '+'
         price.innerHTML = +item.price
         span.innerHTML = '$'
+        btn_delete.innerHTML = "Удалить"
 
         //c
         place.append(prdct)
-        prdct.append(img, box, tvr)
-        box.append(h1, h2)
+        prdct.append(img, box_2, tvr)
+        box_2.append(h1, h2)
         tvr.append(incr, wd)
         incr.append(btn_min, p, btn_plus)
-        wd.append(price, span)
+        wd.append(price, span, btn_delete)
+
+        btn_delete.onclick = () => {
+            cart_ids.splice(cart_ids.indexOf(id), 1)
+            prdct.remove()
+            let totalForMinus = item.price * count_num
+            total = parseFloat((total - totalForMinus).toFixed(2))
+            total_sum.innerHTML = total
+
+            bags(products, box)
+        }
 
         btn_min.onclick = () => {
-
-            if (p.innerHTML <= 0) {
-                let indx = cart_ids.indexOf(item.id)
-                cart_ids.splice(indx, 1)
-                btn.classList.remove('active')
-                btn.innerHTML = 'В избранное'
-                dig--
-                cart(cart_ids, tovari)
-            } else if (p.innerHTML > 0) {
-                p.innerHTML--
-                price.innerText = Math.trunc((price.innerText - item.price) * 100) / 100
-                sum = Math.trunc((sum - item.price) * 100) / 100
+            if (count_num > 1) {
+                p.innerHTML = --count_num
+                price.innerHTML = (item.price * count_num).toFixed(2)
+                total = parseFloat((total - item.price).toFixed(2))
+                total_sum.innerHTML = total
             }
-            num.innerHTML = dig
-            sum_pokaz.innerHTML = sum
         }
 
         btn_plus.onclick = () => {
-            p.innerHTML++
-            if (p.innerHTML >= 1) {
-                price.innerText = Math.trunc((item.price * p.innerText) * 100) / 100
-                sum = Math.trunc((sum + item.price) * 100) / 100
+            if (count_num < item.rating.count) {
+                p.innerHTML = ++count_num
+                price.innerHTML = (item.price * count_num).toFixed(2)
+                total = parseFloat((total + item.price).toFixed(2))
+                total_sum.innerHTML = total
             }
-            sum_pokaz.innerHTML = sum
         }
     }
 }

@@ -2,7 +2,7 @@ import { products } from "./arr.js"
 import { bags, five} from "./functions.js"
 
 let body = document.body
-let box = document.createElement('div')
+export let box = document.createElement('div')
 let just = document.querySelector('#just')
 let all = document.querySelector('#all')
 let open = document.querySelector('#open')
